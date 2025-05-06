@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Путь самопознания</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7a5195;
+            --secondary-color: #ef5675;
+            --accent-color: #ffa600;
+            --light-bg: #f8f9fa;
+            --dark-text: #2b2d42;
+            --light-text: #f8f9fa;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        .header-scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light-text);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-scrolled .logo {
+            color: var(--primary-color);
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--accent-color);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: var(--light-text);
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .header-scrolled .nav-link {
+            color: var(--dark-text);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 70%;
+        }
+        
+        .nav-link.active::after {
+            width: 70%;
+        }
+        
+        .hamburger {
+            display: none;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--light-text);
+            font-size: 1.5rem;
+        }
+        
+        .header-scrolled .hamburger {
+            color: var(--dark-text);
+        }
+        
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://via.placeholder.com/1920x1080.png?text=Природа') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--light-text);
+            letter-spacing: 1px;
+            animation: fadeInDown 1.2s ease;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: var(--light-text);
+            animation: fadeInUp 1.2s ease 0.3s;
+            animation-fill-mode: both;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--light-text);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--light-text);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--light-text);
+            border: 2px solid var(--light-text);
+            margin-left: 1rem;
+        }
+        
+        .btn-outline:hover {
+            background: var(--light-text);
+            color: var(--dark-text);
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--light-text);
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+        
+        .testimonials {
+            padding: 6rem 0;
+            background: #fff;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            width: 50px;
+            height: 3px;
+            background: var(--accent-color);
+            transform: translateX(-50%);
+        }
+        
+        .section-title p {
+            font-size: 1.1rem;
+            color: #777;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial-card {
+            background: var(--light-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            z-index: -1;
+            transition: var(--transition);
+        }
+        
+        .testimonial-card:hover::before {
+            height: 100%;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .testimonial-card:hover h3,
+        .testimonial-card:hover p {
+            color: var(--light-text);
+        }
+        
+        .testimonial-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 3px solid var(--accent-color);
+        }
+        
+        .testimonial-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+        
+        .testimonial-card p {
+            transition: var(--transition);
+        }
+        
+        .testimonial-card .quote {
+            font-size: 4rem;
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            opacity: 0.1;
+            color: var(--primary-color);
+        }
+        
+        .about {
+            padding: 6rem 0;
+            background: var(--light-bg);
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+        
+        .about-img {
+            flex: 1;
+        }
+        
+        .about-img img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .about-text h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 50px;
+            height: 3px;
+            background: var(--accent-color);
+        }
+        
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        footer {
+            background: #2b2d42;
+            color: var(--light-text);
+            padding-top: 4rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 30px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+        
+        .footer-column p {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light-text);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--accent-color);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        
+        @media (max-width: 991px) {
+            .about-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: #fff;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: var(--transition);
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-menu.active {
+                right: 0;
+            }
+            
+            .nav-link {
+                color: var(--dark-text);
+            }
+            
+            .close-menu {
+                position: absolute;
+                top: 2rem;
+                right: 2rem;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+            
+            .btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .btn-outline {
+                margin-left: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-leaf"></i> Путь самопознания
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link active">Главная</a></li>
+                    <li><a href="gallery.html" class="nav-link">Галерея</a></li>
+                    <li><a href="video.html" class="nav-link">Видео</a></li>
+                    <li><a href="contact.html" class="nav-link">Контакты</a></li>
+                    <div class="close-menu">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </ul>
+                <button class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Путь самопознания: от привычек до осознанности</h1>
+                <p>Исследуйте глубины своего сознания через осознанность, медитацию и самоанализ. Начните путешествие к лучшей версии себя уже сегодня.</p>
+                <div class="hero-buttons">
+                    <a href="#about" class="btn btn-primary">Узнать больше</a>
+                    <a href="contact.html" class="btn btn-outline">Связаться с нами</a>
+                </div>
+            </div>
+        </div>
+        <a href="#testimonials" class="scroll-down">
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Отзывы участников</h2>
+                <p>Узнайте, как наша программа изменила жизни других людей.</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="quote"><i class="fas fa-quote-right"></i></div>
+                    <img src="/api/placeholder/80/80" alt="Участник 1">
+                    <h3>Анна К.</h3>
+                    <p>Этот проект помог мне лучше понять себя. Через практики осознанности я научилась слышать свой внутренний голос и жить более гармоничной жизнью.</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote"><i class="fas fa-quote-right"></i></div>
+                    <img src="/api/placeholder/80/80" alt="Участник 2">
+                    <h3>Михаил Д.</h3>
+                    <p>Спокойствие и вдохновение в каждом шаге. Благодаря этой программе я нашел внутренний баланс и научился справляться со стрессом.</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote"><i class="fas fa-quote-right"></i></div>
+                    <img src="/api/placeholder/80/80" alt="Участник 3">
+                    <h3>Елена П.</h3>
+                    <p>Курс по медитации для начинающих открыл мне новый мир. Теперь медитация – неотъемлемая часть моей ежедневной практики.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-img">
+                    <img src="/api/placeholder/600/400" alt="О нас">
+                </div>
+                <div class="about-text">
+                    <h2>О нашем проекте</h2>
+                    <p>Мы создали «Путь самопознания» для тех, кто стремится к глубокому пониманию себя, своих мыслей и эмоций. Наша миссия – помочь людям найти внутреннюю гармонию и раскрыть свой потенциал через осознанность и медитацию.</p>
+                    <p>Мы предлагаем разнообразные курсы, практики и материалы, которые помогут вам освоить техники самоанализа, медитации и осознанного существования в современном мире.</p>
+                    <a href="gallery.html" class="btn btn-primary">Наша галерея</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О нас</h3>
+                    <p>Путь самопознания – проект, созданный для помощи людям в поиске внутренней гармонии и осознанности в повседневной жизни.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Полезные ссылки</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="video.html">Видео</a></li>
+                        <li><a href="contact.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <p><i class="fas fa-envelope"></i> info@путьсамопознания.рф</p>
+                    <p><i class="fas fa-phone"></i> +7 (903) 289-60-30</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Москва, Россия</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Путь самопознания. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+        
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        const closeMenu = document.querySelector('.close-menu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.add('active');
+        });
+        
+        closeMenu.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+        });
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.testimonial-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>

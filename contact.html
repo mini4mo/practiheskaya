@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты - Путь самопознания</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7a5195;
+            --secondary-color: #ef5675;
+            --accent-color: #ffa600;
+            --light-bg: #f8f9fa;
+            --dark-text: #2b2d42;
+            --light-text: #f8f9fa;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--accent-color);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: var(--dark-text);
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 70%;
+        }
+        
+        .nav-link.active::after {
+            width: 70%;
+        }
+        
+        .hamburger {
+            display: none;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--dark-text);
+            font-size: 1.5rem;
+        }
+        
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1920/300') no-repeat center center/cover;
+            height: 30vh;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--light-text);
+            margin-top: 80px;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--accent-color);
+        }
+        
+        .contact-section {
+            padding: 5rem 0;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            align-items: start;
+        }
+        
+        .contact-info {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .contact-info h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 30px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            margin-right: 1rem;
+            width: 40px;
+            height: 40px;
+            background: var(--light-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        
+        .contact-text h4 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-text p {
+            color: #777;
+        }
+        
+        .contact-form {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .contact-form h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .contact-form h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 30px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(122, 81, 149, 0.1);
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--primary-color);
+            color: var(--light-text);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+        
+        .error {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .map-section {
+            padding-bottom: 5rem;
+        }
+        
+        .map-container {
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        footer {
+            background: #2b2d42;
+            color: var(--light-text);
+            padding-top: 4rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 30px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+        
+        .footer-column p {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light-text);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--accent-color);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+            
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: #fff;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: var(--transition);
+                box-shadow: var(--shadow);
+                z-index: 1001;
+            }
+            
+            .nav-menu.active {
+                right: 0;
+            }
+            
+            .close-menu {
+                position: absolute;
+                top: 2rem;
+                right: 2rem;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-leaf"></i> Путь самопознания
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Главная</a></li>
+                    <li><a href="gallery.html" class="nav-link">Галерея</a></li>
+                    <li><a href="video.html" class="nav-link">Видео</a></li>
+                    <li><a href="contact.html" class="nav-link active">Контакты</a></li>
+                    <div class="close-menu">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </ul>
+                <button class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Свяжитесь с нами</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Главная</a></li>
+                <li>/</li>
+                <li>Контакты</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Контактная информация</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Адрес</h4>
+                            <p>Москва, Россия</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Телефон</h4>
+                            <p>+7 (903) 289-60-30</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Email</h4>
+                            <p>info@путьсамопознания.рф</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Часы работы</h4>
+                            <p>Пн - Пт: 9:00 - 18:00</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Отправьте нам сообщение</h3>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Имя</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                            <p id="name-error" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Электронная почта</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                            <p id="email-error" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject" class="form-label">Тема</label>
+                            <input type="text" id="subject" name="subject" class="form-control" required>
+                            <p id="subject-error" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-label">Сообщение</label>
+                            <textarea id="message" name="message" rows="5" class="form-control" required></textarea>
+                            <p id="message-error" class="error"></p>
+                        </div>
+                        <button type="submit" class="btn">Отправить</button>
+                        <p id="form-error" class="error"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="map-section">
+        <div class="container">
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.5888857325316!2d37.618675876592526!3d55.75196997986978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54a50b315e473%3A0xa886bf5a3d9b2e68!2z0JzQvtGB0LrQstCwLCDQoNC-0YHRgdC40Y8!5e0!3m2!1sru!2sru!4v1647881760244!5m2!1sru!2sru" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О нас</h3>
+                    <p>Путь самопознания – проект, созданный для помощи людям в поиске внутренней гармонии и осознанности в повседневной жизни.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Полезные ссылки</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="video.html">Видео</a></li>
+                        <li><a href="contact.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <p><i class="fas fa-envelope"></i> info@путьсамопознания.рф</p>
+                    <p><i class="fas fa-phone"></i> +7 (903) 289-60-30</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Москва, Россия</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Путь самопознания. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        const closeMenu = document.querySelector('.close-menu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.add('active');
+        });
+        
+        closeMenu.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+        });
+        
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            document.querySelectorAll('.error').forEach(el => {
+                el.style.display = 'none';
+                el.textContent = '';
+            });
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            let hasError = false;
+            
+            if (!name) {
+                document.getElementById('name-error').textContent = 'Пожалуйста, введите ваше имя';
+                document.getElementById('name-error').style.display = 'block';
+                hasError = true;
+            }
+            
+            if (!email) {
+                document.getElementById('email-error').textContent = 'Пожалуйста, введите вашу электронную почту';
+                document.getElementById('email-error').style.display = 'block';
+                hasError = true;
+            } else {
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(email)) {
+                    document.getElementById('email-error').textContent = 'Пожалуйста, введите корректный адрес электронной почты';
+                    document.getElementById('email-error').style.display = 'block';
+                    hasError = true;
+                }
+            }
+            
+            if (!subject) {
+                document.getElementById('subject-error').textContent = 'Пожалуйста, введите тему сообщения';
+                document.getElementById('subject-error').style.display = 'block';
+                hasError = true;
+            }
+            
+            if (!message) {
+                document.getElementById('message-error').textContent = 'Пожалуйста, введите ваше сообщение';
+                document.getElementById('message-error').style.display = 'block';
+                hasError = true;
+            }
+            
+            if (!hasError) {
+
+                alert('Сообщение успешно отправлено! Мы свяжемся с вами в ближайшее время.');
+                this.reset();
+            }
+        });
+    </script>
+</body>
+</html>

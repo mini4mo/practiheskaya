@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея - Путь самопознания</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7a5195;
+            --secondary-color: #ef5675;
+            --accent-color: #ffa600;
+            --light-bg: #f8f9fa;
+            --dark-text: #2b2d42;
+            --light-text: #f8f9fa;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--accent-color);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: var(--dark-text);
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 70%;
+        }
+        
+        .nav-link.active::after {
+            width: 70%;
+        }
+        
+        .hamburger {
+            display: none;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--dark-text);
+            font-size: 1.5rem;
+        }
+        
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1920/300') no-repeat center center/cover;
+            height: 30vh;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--light-text);
+            margin-top: 80px;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--accent-color);
+        }
+        
+        .gallery-section {
+            padding: 5rem 0;
+        }
+        
+        .gallery-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+        
+        .filter-btn {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.6rem 1.5rem;
+            margin: 0.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: var(--light-text);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gallery-item {
+            overflow: hidden;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            height: 250px;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-icon {
+            color: var(--light-text);
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .gallery-icon:hover {
+            background: var(--primary-color);
+            transform: scale(1.1);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1100;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.open {
+            display: flex;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.3s ease;
+        }
+        
+        .modal.open .modal-content {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: var(--light-text);
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .modal-nav:hover {
+            background: var(--primary-color);
+        }
+        
+        .modal-prev {
+            left: 2rem;
+        }
+        
+        .modal-next {
+            right: 2rem;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: var(--light-text);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .modal-close:hover {
+            color: var(--accent-color);
+            transform: rotate(90deg);
+        }
+        
+        footer {
+            background: #2b2d42;
+            color: var(--light-text);
+            padding-top: 4rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 30px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+        
+        .footer-column p {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light-text);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--accent-color);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+            
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: #fff;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: var(--transition);
+                box-shadow: var(--shadow);
+                z-index: 1001;
+            }
+            
+            .nav-menu.active {
+                right: 0;
+            }
+            
+            .close-menu {
+                position: absolute;
+                top: 2rem;
+                right: 2rem;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .modal-nav {
+                font-size: 1.5rem;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .modal-prev {
+                left: 1rem;
+            }
+            
+            .modal-next {
+                right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-leaf"></i> Путь самопознания
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Главная</a></li>
+                    <li><a href="gallery.html" class="nav-link active">Галерея</a></li>
+                    <li><a href="video.html" class="nav-link">Видео</a></li>
+                    <li><a href="contact.html" class="nav-link">Контакты</a></li>
+                    <div class="close-menu">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </ul>
+                <button class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Фотогалерея</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Главная</a></li>
+                <li>/</li>
+                <li>Галерея</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="container">
+            <div class="gallery-filter">
+                <button class="filter-btn active" data-filter="all">Все</button>
+                <button class="filter-btn" data-filter="meditation">Медитация</button>
+                <button class="filter-btn" data-filter="nature">Природа</button>
+                <button class="filter-btn" data-filter="workshops">Мастер-классы</button>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item" data-category="meditation">
+                    <img src="images/image1.jpg" alt="Медитация" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon" onclick="openModal('/api/placeholder/1200/800', 0)">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="nature">
+                    <img src="images/image2.jpg" alt="Природа" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon" onclick="openModal('/api/placeholder/1200/800', 1)">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="workshops">
+                    <img src="images/image3.jpg" alt="Мастер-класс" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon" onclick="openModal('/api/placeholder/1200/800', 2)">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="meditation">
+                    <img src="images/image4.jpg" alt="Медитация" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon" onclick="openModal('/api/placeholder/1200/800', 3)">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="nature">
+                    <img src="images/image5.jpg" alt="Природа" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon" onclick="openModal('/api/placeholder/1200/800', 4)">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="workshops">
+                    <img src="images/image6.jpg" alt="Мастер-класс" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon" onclick="openModal('/api/placeholder/1200/800', 5)">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">
+            <i class="fas fa-times"></i>
+        </span>
+        <img class="modal-content" id="modalImg">
+        <div class="modal-nav modal-prev" onclick="changeImage(-1)">
+            <i class="fas fa-chevron-left"></i>
+        </div>
+        <div class="modal-nav modal-next" onclick="changeImage(1)">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О нас</h3>
+                    <p>Путь самопознания – проект, созданный для помощи людям в поиске внутренней гармонии и осознанности в повседневной жизни.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Полезные ссылки</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="video.html">Видео</a></li>
+                        <li><a href="contact.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <p><i class="fas fa-envelope"></i> info@путьсамопознания.рф</p>
+                    <p><i class="fas fa-phone"></i> +7 (903) 289-60-30</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Москва, Россия</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Путь самопознания. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        const closeMenu = document.querySelector('.close-menu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.add('active');
+        });
+        
+        closeMenu.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+        });
+        
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(btn => btn.classList.remove('active'));
+                
+                btn.classList.add('active');
+                
+                const filter = btn.getAttribute('data-filter');
+                
+                galleryItems.forEach(item => {
+                    if (filter === 'all') {
+                        item.style.display = 'block';
+                    } else if (item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        let currentImgIndex = 0;
+        const galleryImages = [
+            '/api/placeholder/1200/800',
+            '/api/placeholder/1200/800',
+            '/api/placeholder/1200/800',
+            '/api/placeholder/1200/800',
+            '/api/placeholder/1200/800',
+            '/api/placeholder/1200/800'
+        ];
+        
+        function openModal(src, index) {
+            modal.classList.add('open');
+            modalImg.src = src;
+            currentImgIndex = index;
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            modal.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function changeImage(direction) {
+            currentImgIndex = (currentImgIndex + direction + galleryImages.length) % galleryImages.length;
+            modalImg.src = galleryImages[currentImgIndex];
+        }
+        
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if (modal.classList.contains('open')) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                } else if (e.key === 'ArrowLeft') {
+                    changeImage(-1);
+                } else if (e.key === 'ArrowRight') {
+                    changeImage(1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
